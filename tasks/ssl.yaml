@@ -26,7 +26,7 @@
 
 - name: "Get SSLCertificateChainFile path from {{ ssl_config }}"
   ansible.builtin.shell:
-    cmd: grep -i "SSLCertificateChainFile /" {{ ssl_config }} | grep -v "#"
+    cmd: grep -i "SSLCertificateChainFile /" {{ ssl_config }}
   register: output
 
 - name: "Set facts based on SSLCertificateChainFile output"
