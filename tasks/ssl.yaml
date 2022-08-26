@@ -4,11 +4,11 @@
 - name: "Include OS-specific variables"
   include_vars: "{{ ansible_os_family }}.yaml"
 
-- name: "Get path"
-  ansible.builtin.slurp:
-    src: "{{ ssl_config }}"
-  register: lines
+- name: "Get SSLCertificateFile path from {{ ssl_config }}"
+  ansible.builtin.shell:
+    cmd: grep -i "SSLCertificateFile /" {{ ssl_config }} | grep -v "#"
+  register: sslcertificatefile
 
 - name: Print returned information
   ansible.builtin.debug:
-    msg: "{{ lines['content'] | b64decode }}"
+    var: sslcertificatefile
