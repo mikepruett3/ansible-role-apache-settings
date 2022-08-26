@@ -24,11 +24,23 @@
     ssl_key_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
     ssl_key_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
 
+- name: "Get SSLCertificateChainFile path from {{ ssl_config }}"
+  ansible.builtin.shell:
+    cmd: grep -i "SSLCertificateChainFile /" {{ ssl_config }} | grep -v "#"
+  register: output
+
+- name: "Set facts based on SSLCertificateChainFile output"
+  ansible.builtin.set_fact:
+    ssl_chain_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
+    ssl_chain_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
+
 - name: Print returned information
   ansible.builtin.debug:
     msg:
-      - "{{ssl_certificate_path}}"
-      - "{{ssl_certificate_file}}"
-      - "{{ssl_key_path}}"
-      - "{{ssl_key_file}}"
+      - "{{ ssl_certificate_path }}"
+      - "{{ ssl_certificate_file }}"
+      - "{{ ssl_key_path }}"
+      - "{{ ssl_key_file }}"
+      - "{{ ssl_chain_path }}"
+      - "{{ ssl_chain_file }}"
     #msg: "{{ sslcertificatefile.stdout.split(' ') }}"
