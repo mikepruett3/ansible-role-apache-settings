@@ -6,9 +6,14 @@
 
 - name: "Get SSLCertificateFile path from {{ ssl_config }}"
   ansible.builtin.shell:
-    cmd: grep -i "SSLCertificateFile /" {{ ssl_config }} | grep -v "#" | grep -v "SSLCertificateFile"
-  register: sslcertificatefile
+    cmd: grep -i "SSLCertificateFile /" {{ ssl_config }} | grep -v "#"
+  register: output
+
+- name: "Set fact for file"
+  ansible.builtin.set_fact:
+    ssl_certificate_file: "{{ sslcertificatefile.stdout.split(' ').last(1) }}"
 
 - name: Print returned information
   ansible.builtin.debug:
-    msg: "{{ sslcertificatefile.stdout.split(' ') }}"
+    var: ssl_certificate_file
+    #msg: "{{ sslcertificatefile.stdout.split(' ') }}"
