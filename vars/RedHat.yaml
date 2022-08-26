@@ -1,0 +1,9 @@
+---
+# RedHat vars file for ansible-role-apache-settings
+
+apache_dir: "/etc/httpd"
+config_dir: "conf.d"
+modules_dir: "{{ apache_dir }}/conf.modules.d"
+main_config: "{{ apache_dir }}/conf/httpd.conf"
+ssl_config: "{{ apache_dir }}/{{ config_dir }}/ssl.conf"
+default_site_config: "{{ apache_dir }}/{{ config_dir }}/welcome.conf"

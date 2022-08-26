@@ -1,0 +1,8 @@
+---
+# Debian vars file for ansible-role-apache-settings
+
+apache_dir: "/etc/apache2"
+config_dir: "sites-available"
+modules_dir: "{{ apache_dir }}/mods-enabled"
+main_config: "{{ apache_dir }}/apache2.conf"
+default_site_config: "{{ apache_dir }}/{{ config_dir }}/welcome.conf"
