@@ -11,7 +11,7 @@
 
 - name: "Set fact for file"
   ansible.builtin.set_fact:
-    ssl_certificate_file: "{{ output.stdout.split(' ',1)[1] }}"
+    ssl_certificate_file: "{{ output.stdout.split(' ')[1] }}"
 
 - name: Print returned information
   ansible.builtin.debug:
