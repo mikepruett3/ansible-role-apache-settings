@@ -12,8 +12,9 @@
 - name: "Set fact for file"
   ansible.builtin.set_fact:
     ssl_certificate_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
+    ssl_certificate_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
 
 - name: Print returned information
   ansible.builtin.debug:
-    var: ssl_certificate_file
+    var: ssl_certificate_path
     #msg: "{{ sslcertificatefile.stdout.split(' ') }}"
