@@ -12,6 +12,7 @@
 
 - name: "Set facts based on SSLCertificateFile output"
   ansible.builtin.set_fact:
+    ssl_certificate: "{{ output.stdout }}"
     ssl_certificate_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
     ssl_certificate_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
 
@@ -23,6 +24,7 @@
 
 - name: "Set facts based on SSLCertificateKeyFile output"
   ansible.builtin.set_fact:
+    ssl_key: "{{ output.stdout }}"
     ssl_key_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
     ssl_key_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
 
@@ -34,12 +36,16 @@
 
 - name: "Set facts based on SSLCertificateChainFile output"
   ansible.builtin.set_fact:
+    ssl_chain: "{{ output.stdout }}"
     ssl_chain_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
     ssl_chain_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
 
-#- name: "Print returned information"
-#  ansible.builtin.debug:
-#    msg:
+- name: "Print returned information"
+  ansible.builtin.debug:
+    msg:
+      - "{{ ssl_certificate }}"
+      - "{{ ssl_key }}"
+      - "{{ ssl_chain }}"
 #      - "{{ ssl_certificate_path }}"
 #      - "{{ ssl_certificate_file }}"
 #      - "{{ ssl_key_path }}"
