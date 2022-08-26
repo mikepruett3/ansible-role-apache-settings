@@ -8,6 +8,7 @@
   ansible.builtin.shell:
     cmd: grep -i "SSLCertificateFile /" {{ ssl_config }} | grep -v "#"
   register: output
+  changed_when: output.rc != 0
 
 - name: "Set facts based on SSLCertificateFile output"
   ansible.builtin.set_fact:
@@ -18,6 +19,7 @@
   ansible.builtin.shell:
     cmd: grep -i "SSLCertificateKeyFile /" {{ ssl_config }} | grep -v "#"
   register: output
+  changed_when: output.rc != 0
 
 - name: "Set facts based on SSLCertificateKeyFile output"
   ansible.builtin.set_fact:
@@ -28,21 +30,22 @@
   ansible.builtin.shell:
     cmd: grep -i "SSLCertificateChainFile /" {{ ssl_config }}
   register: output
+  changed_when: output.rc != 0
 
 - name: "Set facts based on SSLCertificateChainFile output"
   ansible.builtin.set_fact:
     ssl_chain_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
     ssl_chain_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
 
-#- name: "Print returned information"
-#  ansible.builtin.debug:
-#    msg:
-#      - "{{ ssl_certificate_path }}"
-#      - "{{ ssl_certificate_file }}"
-#      - "{{ ssl_key_path }}"
-#      - "{{ ssl_key_file }}"
-#      - "{{ ssl_chain_path }}"
-#      - "{{ ssl_chain_file }}"
+- name: "Print returned information"
+  ansible.builtin.debug:
+    msg:
+      - "{{ ssl_certificate_path }}"
+      - "{{ ssl_certificate_file }}"
+      - "{{ ssl_key_path }}"
+      - "{{ ssl_key_file }}"
+      - "{{ ssl_chain_path }}"
+      - "{{ ssl_chain_file }}"
 
 - name: "Upload Certificates to {{ inventory_hostname }}"
   ansible.builtin.copy:
