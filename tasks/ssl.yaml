@@ -11,4 +11,4 @@
 
 - name: Print returned information
   ansible.builtin.debug:
-    msg: "sslcertificatefile.split(' ')"
+    msg: "sslcertificatefile.stdout.split(' ')"
