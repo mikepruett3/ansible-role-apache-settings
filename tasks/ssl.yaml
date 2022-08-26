@@ -27,8 +27,8 @@
 - name: Print returned information
   ansible.builtin.debug:
     msg:
-      - ssl_certificate_path
-      - ssl_certificate_file
-      - ssl_key_path
-      - ssl_key_file
+      - "{{ssl_certificate_path}}"
+      - "{{ssl_certificate_file}}"
+      - "{{ssl_key_path}}"
+      - "{{ssl_key_file}}"
     #msg: "{{ sslcertificatefile.stdout.split(' ') }}"
