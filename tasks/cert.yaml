@@ -74,7 +74,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
-    validate: 'apachectl -t'
+    #validate: 'apachectl -t'
     mode: '0640'
     backup: yes
   with_items:
