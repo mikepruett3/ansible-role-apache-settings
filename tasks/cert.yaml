@@ -79,4 +79,4 @@
     backup: yes
   with_items:
     - regexp: "^SSLCertificateFile"
-      line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file }}"
+      line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
