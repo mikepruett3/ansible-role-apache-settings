@@ -84,3 +84,4 @@
       line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
     - regexp: "^SSLCertificateChainFile"
       line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
+  notify: "Restart Apache HTTP Server Daemon"

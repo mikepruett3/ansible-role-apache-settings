@@ -1,2 +1,7 @@
 ---
 # handlers file for ansible-role-apache-settings
+
+- name: "Restart Apache HTTP Server Daemon"
+  service:
+    name: "{{ apache_daemon }}"
+    state: restarted

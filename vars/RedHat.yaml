@@ -1,6 +1,7 @@
 ---
 # RedHat vars file for ansible-role-apache-settings
 
+apache_daemon: "httpd.service"
 apache_dir: "/etc/httpd"
 config_dir: "conf.d"
 modules_dir: "{{ apache_dir }}/conf.modules.d"
