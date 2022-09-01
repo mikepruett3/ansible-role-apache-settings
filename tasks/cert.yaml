@@ -80,3 +80,7 @@
   with_items:
     - regexp: "^SSLCertificateFile"
       line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
+    - regexp: "^SSLCertificateKeyFile"
+      line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
+    - regexp: "^SSLCertificateChainFile"
+      line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
