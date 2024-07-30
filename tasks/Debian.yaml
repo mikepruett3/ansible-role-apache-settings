@@ -1,0 +1,11 @@
+---
+# Debian tasks file for ansible-role-apache-settings
+
+- name: "Collect list of enabled site configurations"
+  ansible.builtin.shell:
+    cmd: "ls {{ apache_dir }}/sites-enabled/"
+  register: sites
+
+- name: "Debug"
+  debug:
+    var: sites
