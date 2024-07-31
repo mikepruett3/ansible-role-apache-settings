@@ -11,7 +11,7 @@
     var: sites
 
 - name: "Include tasks from cert playbook"
-  ansible.builtin.include_tasks: "{{ playbook_dir }}/tasks/Redhat.yaml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/Redhat.yaml"
   vars:
       ssl_config: "{{ item }}"
   with_items:
