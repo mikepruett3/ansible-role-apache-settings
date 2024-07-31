@@ -9,3 +9,10 @@
 - name: "Debug"
   debug:
     var: sites
+
+- name: "Include tasks from cert playbook"
+  ansible.builtin.include_tasks: "Redhat.yaml"
+  vars:
+      ssl_config: "{{ item }}"
+  with_items:
+    - sites
