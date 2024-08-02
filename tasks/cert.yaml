@@ -75,7 +75,7 @@
   ansible.builtin.lineinfile:
     dest: "{{ ssl_config }}"
     regexp: '^\s*SSLCertificateFile(\s+)(\S*)$'
-    line: "   SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
+    line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
     state: present
     #validate: 'apachectl -t'
     mode: '0640'
@@ -85,7 +85,7 @@
   ansible.builtin.lineinfile:
     dest: "{{ ssl_config }}"
     regexp: '^\s*SSLCertificateKeyFile(\s+)(\S*)$'
-    line: "   SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
+    line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
     state: present
     #validate: 'apachectl -t'
     mode: '0640'
@@ -94,7 +94,7 @@
   ansible.builtin.lineinfile:
     dest: "{{ ssl_config }}"
     regexp: '^\s*SSLCertificateChainFile(\s+)(\S*)$'
-    line: "   SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
+    line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
     state: present
     #validate: 'apachectl -t'
     mode: '0640'
