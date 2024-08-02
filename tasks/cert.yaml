@@ -1,5 +1,5 @@
 ---
-# RedHat tasks file for ansible-role-apache-settings
+# Certificate tasks file for ansible-role-apache-settings
 
 - name: "Get SSLCertificateFile path from {{ ssl_config }}"
   ansible.builtin.shell:
@@ -17,7 +17,7 @@
   ansible.builtin.shell:
     cmd: grep -i "SSLCertificateKeyFile /" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
   register: output
-  #changed_when: output.rc != 0
+  changed_when: output.rc != 0
 
 - name: "Set facts based on SSLCertificateKeyFile output"
   ansible.builtin.set_fact:
@@ -29,7 +29,7 @@
   ansible.builtin.shell:
     cmd: grep -i "SSLCertificateChainFile /" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
   register: output
-  #changed_when: output.rc != 0
+  changed_when: output.rc != 0
 
 - name: "Set facts based on SSLCertificateChainFile output"
   ansible.builtin.set_fact:
@@ -37,39 +37,26 @@
     ssl_chain_file: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[1] }}"
     ssl_chain_path: "{{ output.stdout.split(' ')[1].rsplit('/', 1)[0] }}"
 
-#- name: "Print returned information"
-#  ansible.builtin.debug:
-#    msg:
-#      - "{{ ssl_certificate }}"
-#      - "{{ ssl_key }}"
-#      - "{{ ssl_chain }}"
-#      - "{{ ssl_certificate_path }}"
-#      - "{{ ssl_certificate_file }}"
-#      - "{{ ssl_key_path }}"
-#      - "{{ ssl_key_file }}"
-#      - "{{ ssl_chain_path }}"
-#      - "{{ ssl_chain_file }}"
-
-#- name: "Upload Certificates to {{ inventory_hostname }}"
-#  ansible.builtin.copy:
-#    src: "{{ item.src }}"
-#    dest: "{{ item.dest }}"
-#    owner: root
-#    group: root
-#    mode: '0640'
-#  with_items:
-#    - {
-#        src: "{{ certificate_file }}",
-#        dest: "{{ ssl_certificate_path }}/"
-#      }
-#    - {
-#        src: "{{ certificate_key }}",
-#        dest: "{{ ssl_key_path }}/"
-#      }
-#    - {
-#        src: "{{ certificate_chain }}",
-#        dest: "{{ ssl_chain_path }}/"
-#      }
+- name: "Upload Certificates to {{ inventory_hostname }}"
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: '0640'
+  with_items:
+    - {
+        src: "{{ certificate_file }}",
+        dest: "{{ ssl_certificate_path }}/"
+      }
+    - {
+        src: "{{ certificate_key }}",
+        dest: "{{ ssl_key_path }}/"
+      }
+    - {
+        src: "{{ certificate_chain }}",
+        dest: "{{ ssl_chain_path }}/"
+      }
 
 - name: "Update {{ ssl_config }} with new Certificate file"
   ansible.builtin.lineinfile:
@@ -79,7 +66,6 @@
     state: present
     #validate: 'apachectl -t'
     mode: '0640'
-    #backup: yes
 
 - name: "Update {{ ssl_config }} with new Certificate Key"
   ansible.builtin.lineinfile:
@@ -99,27 +85,3 @@
     #validate: 'apachectl -t'
     mode: '0640'
   notify: "Restart Apache HTTP Server Daemon"
-
-#- name: "Update {{ ssl_config }} with new Certificate files"
-#  ansible.builtin.lineinfile:
-#    dest: "{{ ssl_config }}"
-#    regexp: "{{ item.regexp }}"
-#    line: "{{ item.line }}"
-#    state: present
-#    #validate: 'apachectl -t'
-#    mode: '0640'
-#    backup: yes
-#  with_items:
-#    - {
-#        regexp: "^SSLCertificateFile",
-#        line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
-#      }
-#    - {
-#        regexp: "^SSLCertificateKeyFile",
-#        line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
-#      }
-#    - {
-#        regexp: "^SSLCertificateChainFile",
-#        line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
-#      }
-#  #notify: "Restart Apache HTTP Server Daemon"
