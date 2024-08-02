@@ -1,7 +1,7 @@
 ---
 # Debian vars file for ansible-role-apache-settings
 
-apache_daemon: "httpd.service"
+apache_daemon: "apache2"
 apache_dir: "/etc/apache2"
 config_dir: "sites-available"
 modules_dir: "{{ apache_dir }}/mods-enabled"
