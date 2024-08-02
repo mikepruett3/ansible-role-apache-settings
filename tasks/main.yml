@@ -12,18 +12,18 @@
   when:
     - ansible_facts['os_family'] == 'Debian'
 
-- name: "Debug"
-  debug:
-    var: sites
-  when:
-    - ansible_facts['os_family'] == 'Debian'
+#- name: "Debug"
+#  debug:
+#    var: sites
+#  when:
+#    - ansible_facts['os_family'] == 'Debian'
 
 - name: "Include tasks from cert playbook"
   ansible.builtin.include_tasks: "cert.yaml"
   vars:
       ssl_config: "{{ item }}"
   with_items:
-    - sites
+    - sites.stdout_lines
   when:
     - ansible_facts['os_family'] == 'Debian'
 
