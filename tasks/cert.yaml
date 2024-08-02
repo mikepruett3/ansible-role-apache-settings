@@ -75,7 +75,7 @@
   ansible.builtin.lineinfile:
     dest: "{{ ssl_config }}"
     regexp: '^\s*SSLCertificateFile(\s+)(\S*)$'
-    line: \g<0>SSLCertificateFile\g<1>{{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}
+    line:    SSLCertificateFile\g<1>{{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}
     backrefs: true
     state: present
     #validate: 'apachectl -t -f %s'
