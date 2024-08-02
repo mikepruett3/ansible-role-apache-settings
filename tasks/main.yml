@@ -18,7 +18,7 @@
   vars:
       ssl_config: "{{ apache_dir }}/{{ config_dir }}/{{ item }}"
   with_items:
-    - "{{ sites.stdout_lines | items2dict }}"
+    - "{{ sites.stdout_lines | string }}"
   when:
     - ansible_facts['os_family'] == 'Debian'
 
