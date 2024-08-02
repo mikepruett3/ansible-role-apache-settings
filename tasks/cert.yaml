@@ -71,26 +71,56 @@
 #        dest: "{{ ssl_chain_path }}/"
 #      }
 
-- name: "Update {{ ssl_config }} with new Certificate files"
+- name: "Update {{ ssl_config }} with new Certificate file"
   ansible.builtin.lineinfile:
     dest: "{{ ssl_config }}"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
+    regexp: '^SSLCertificateFile'
+    line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
     state: present
     #validate: 'apachectl -t'
     mode: '0640'
     backup: yes
-  with_items:
-    - {
-        regexp: "^SSLCertificateFile",
-        line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
-      }
-    - {
-        regexp: "^SSLCertificateKeyFile",
-        line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
-      }
-    - {
-        regexp: "^SSLCertificateChainFile",
-        line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
-      }
-  #notify: "Restart Apache HTTP Server Daemon"
+
+- name: "Update {{ ssl_config }} with new Certificate Key"
+  ansible.builtin.lineinfile:
+    dest: "{{ ssl_config }}"
+    regexp: '^SSLCertificateKeyFile'
+    line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
+    state: present
+    #validate: 'apachectl -t'
+    mode: '0640'
+    backup: yes
+
+- name: "Update {{ ssl_config }} with new CA Certificate file bundle"
+  ansible.builtin.lineinfile:
+    dest: "{{ ssl_config }}"
+    regexp: '^SSLCertificateChainFile'
+    line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
+    state: present
+    #validate: 'apachectl -t'
+    mode: '0640'
+    backup: yes
+
+#- name: "Update {{ ssl_config }} with new Certificate files"
+#  ansible.builtin.lineinfile:
+#    dest: "{{ ssl_config }}"
+#    regexp: "{{ item.regexp }}"
+#    line: "{{ item.line }}"
+#    state: present
+#    #validate: 'apachectl -t'
+#    mode: '0640'
+#    backup: yes
+#  with_items:
+#    - {
+#        regexp: "^SSLCertificateFile",
+#        line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
+#      }
+#    - {
+#        regexp: "^SSLCertificateKeyFile",
+#        line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
+#      }
+#    - {
+#        regexp: "^SSLCertificateChainFile",
+#        line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
+#      }
+#  #notify: "Restart Apache HTTP Server Daemon"
