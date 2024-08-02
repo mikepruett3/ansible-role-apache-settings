@@ -66,7 +66,7 @@
       dest: "{{ ssl_chain_path }}/"
 
 - debug:
-    msg: "{{ ssl_config }}"
+    msg: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file }}"
 
 #- name: "Update {{ ssl_config }} with new Certificate files"
 #  ansible.builtin.lineinfile:
