@@ -7,27 +7,22 @@
 
 - name: "Collect list of enabled site configurations"
   ansible.builtin.shell:
-    cmd: "ls {{ apache_dir }}/sites-enabled/"
+    cmd: "ls {{ apache_dir }}/{{ config_dir }}/"
   register: sites
+  changed_when: sites.rc != 0
   when:
     - ansible_facts['os_family'] == 'Debian'
 
-#- name: "Debug"
-#  debug:
-#    var: sites
-#  when:
-#    - ansible_facts['os_family'] == 'Debian'
-
-- name: "Include tasks from cert playbook"
+- name: "Include tasks from cert playbook (Debian)"
   ansible.builtin.include_tasks: "cert.yaml"
   vars:
       ssl_config: "{{ apache_dir }}/{{ config_dir }}/{{ item }}"
   with_items:
-    - "{{ sites.stdout_lines }}"
+    - "{{ sites.stdout_lines | dict2items}}"
   when:
     - ansible_facts['os_family'] == 'Debian'
 
-- name: "Include tasks from cert playbook"
+- name: "Include tasks from cert playbook (RedHat)"
   ansible.builtin.include_tasks: "cert.yaml"
   when:
     - ansible_facts['os_family'] == 'RedHat'
