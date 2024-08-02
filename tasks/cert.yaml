@@ -75,32 +75,32 @@
   ansible.builtin.lineinfile:
     dest: "{{ ssl_config }}"
     regexp: '^\s*SSLCertificateFile(\s+)(\S*)$'
-    line: \s\s\sSSLCertificateFile\g<1>{{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}
+    line: \.\.\.SSLCertificateFile\g<1>{{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}
     backrefs: true
     state: present
     #validate: 'apachectl -t -f %s'
     mode: '0640'
     #backup: yes
 
-- name: "Update {{ ssl_config }} with new Certificate Key"
-  ansible.builtin.lineinfile:
-    dest: "{{ ssl_config }}"
-    regexp: '^\s*SSLCertificateKeyFile'
-    line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
-    state: present
-    #validate: 'apachectl -t'
-    mode: '0640'
-    #backup: yes
+#- name: "Update {{ ssl_config }} with new Certificate Key"
+#  ansible.builtin.lineinfile:
+#    dest: "{{ ssl_config }}"
+#    regexp: '^\s*SSLCertificateKeyFile'
+#    line: "SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
+#    state: present
+#    #validate: 'apachectl -t'
+#    mode: '0640'
+#    #backup: yes
 
-- name: "Update {{ ssl_config }} with new CA Certificate file bundle"
-  ansible.builtin.lineinfile:
-    dest: "{{ ssl_config }}"
-    regexp: '^\s*SSLCertificateChainFile'
-    line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
-    state: present
-    #validate: 'apachectl -t'
-    mode: '0640'
-    #backup: yes
+#- name: "Update {{ ssl_config }} with new CA Certificate file bundle"
+#  ansible.builtin.lineinfile:
+#    dest: "{{ ssl_config }}"
+#    regexp: '^\s*SSLCertificateChainFile'
+#    line: "SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
+#    state: present
+#    #validate: 'apachectl -t'
+#    mode: '0640'
+#    #backup: yes
 
 #- name: "Update {{ ssl_config }} with new Certificate files"
 #  ansible.builtin.lineinfile:
