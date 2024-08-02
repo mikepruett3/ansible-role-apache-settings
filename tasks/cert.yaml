@@ -77,7 +77,7 @@
     regexp: '^\s*SSLCertificateFile(\s+)(\S*)$'
     line: "   SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
     state: present
-    validate: 'apachectl -t'
+    #validate: 'apachectl -t'
     mode: '0640'
     #backup: yes
 
@@ -87,7 +87,7 @@
     regexp: '^\s*SSLCertificateKeyFile(\s+)(\S*)$'
     line: "   SSLCertificateKeyFile {{ ssl_key_path }}/{{ certificate_key.rsplit('/', 1)[1] }}"
     state: present
-    validate: 'apachectl -t'
+    #validate: 'apachectl -t'
     mode: '0640'
 
 - name: "Update {{ ssl_config }} with new CA Certificate file bundle"
@@ -96,8 +96,9 @@
     regexp: '^\s*SSLCertificateChainFile(\s+)(\S*)$'
     line: "   SSLCertificateChainFile {{ ssl_chain_path }}/{{ certificate_chain.rsplit('/', 1)[1] }}"
     state: present
-    validate: 'apachectl -t'
+    #validate: 'apachectl -t'
     mode: '0640'
+  notify: "Restart Apache HTTP Server Daemon"
 
 #- name: "Update {{ ssl_config }} with new Certificate files"
 #  ansible.builtin.lineinfile:
