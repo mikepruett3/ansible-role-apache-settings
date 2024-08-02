@@ -74,7 +74,7 @@
     #validate: 'apachectl -t'
     mode: '0640'
     backup: yes
-  with_items:
+  loop:
     - regexp: "^SSLCertificateFile"
       line: "SSLCertificateFile {{ ssl_certificate_path }}/{{ certificate_file.rsplit('/', 1)[1] }}"
     - regexp: "^SSLCertificateKeyFile"
