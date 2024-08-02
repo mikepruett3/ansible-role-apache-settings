@@ -3,7 +3,7 @@
 
 - name: "Get SSLCertificateFile path from {{ ssl_config }}"
   ansible.builtin.shell:
-    cmd: grep -i "SSLCertificateFile /" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
+    cmd: grep -i "SSLCertificateFile" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
   register: output
   changed_when: output.rc != 0
 
@@ -15,7 +15,7 @@
 
 - name: "Get SSLCertificateKeyFile path from {{ ssl_config }}"
   ansible.builtin.shell:
-    cmd: grep -i "SSLCertificateKeyFile /" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
+    cmd: grep -i "SSLCertificateKeyFile" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
   register: output
   changed_when: output.rc != 0
 
@@ -27,7 +27,7 @@
 
 - name: "Get SSLCertificateChainFile path from {{ ssl_config }}"
   ansible.builtin.shell:
-    cmd: grep -i "SSLCertificateChainFile /" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
+    cmd: grep -i "SSLCertificateChainFile" {{ ssl_config }} | grep -v "#" | sed -e 's/^\s*//'
   register: output
   changed_when: output.rc != 0
 
