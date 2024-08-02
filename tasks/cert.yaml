@@ -7,6 +7,9 @@
   register: output
   changed_when: output.rc != 0
 
+- ansible.builtin.debug:
+    var: output
+
 - name: "Set facts based on SSLCertificateFile output"
   ansible.builtin.set_fact:
     ssl_certificate: "{{ output.stdout }}"
